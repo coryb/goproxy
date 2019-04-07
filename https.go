@@ -168,7 +168,8 @@ func (proxy *ProxyHttpServer) handleHttps(w http.ResponseWriter, r *http.Request
 		// still handling the request even after hijacking the connection. Those HTTP CONNECT
 		// request can take forever, and the server will be stuck when "closed".
 		// TODO: Allow Server.Close() mechanism to shut down this connection as nicely as possible
-		tlsConfig := defaultTLSConfig
+		tlsConfig := proxy.TLSConfig
+
 		if todo.TLSConfig != nil {
 			var err error
 			tlsConfig, err = todo.TLSConfig(host, ctx)
@@ -408,7 +409,7 @@ func (proxy *ProxyHttpServer) NewConnectDialToProxyWithHandler(https_proxy strin
 
 func TLSConfigFromCA(ca *tls.Certificate) func(host string, ctx *ProxyCtx) (*tls.Config, error) {
 	return func(host string, ctx *ProxyCtx) (*tls.Config, error) {
-		config := *defaultTLSConfig
+		config := *ctx.proxy.TLSConfig
 		ctx.Logf("signing for %s", stripPort(host))
 		cert, err := signHost(*ca, []string{stripPort(host)})
 		if err != nil {

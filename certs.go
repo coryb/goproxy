@@ -17,10 +17,6 @@ func init() {
 
 var tlsClientSkipVerify = &tls.Config{InsecureSkipVerify: true}
 
-var defaultTLSConfig = &tls.Config{
-	InsecureSkipVerify: true,
-}
-
 var CA_CERT = []byte(`-----BEGIN CERTIFICATE-----
 MIIF9DCCA9ygAwIBAgIJAODqYUwoVjJkMA0GCSqGSIb3DQEBCwUAMIGOMQswCQYD
 VQQGEwJJTDEPMA0GA1UECAwGQ2VudGVyMQwwCgYDVQQHDANMb2QxEDAOBgNVBAoM
